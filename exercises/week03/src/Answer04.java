@@ -31,5 +31,7 @@ class WindowAdapter implements WindowListener {
 }
 
 public class Answer04 {
-    WindowAdapter windowAdapter =  new WindowAdapter();
+    public static void main(String args[]) {
+        WindowAdapter windowAdapter = new WindowAdapter();
+    }
 }
