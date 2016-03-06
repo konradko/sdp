@@ -9,14 +9,16 @@ class Singleton {
         // Private constructor prevents instantiation by other developers
     }
 
-    public static Singleton getInstance() {
+    public static synchronized Singleton getInstance() {
         return instance;
     }
 }
 
 public class Answer05 {
-    // Ths won't compile:
-    // Singleton singleton = new Singleton();
-    // The instance can only be accessed via getInstance method:
-    Singleton singleton = Singleton.getInstance();
+    public static void main(String args[]) {
+        // Ths won't compile:
+        // Singleton singleton = new Singleton();
+        // The instance can only be accessed via getInstance method:
+        Singleton singleton = Singleton.getInstance();
+    }
 }
