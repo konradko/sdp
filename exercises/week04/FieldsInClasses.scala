@@ -39,9 +39,11 @@ assert(cup.add(-55) ==  0)
 assert(cup.add(10)  == 10)
 assert(cup.add(-9) ==  1)
 assert(cup.add(-2) ==  0)
+
 // 3. Can you set percentFull from outside the class? Try it, like this:
 cup.percentFull = 56
 assert(cup.percentFull == 56)
+
 // 4. Write methods that allow you to both set and get the value of percentFull. Satisfy the following:
 class Cup {
     var percentFull = 0
