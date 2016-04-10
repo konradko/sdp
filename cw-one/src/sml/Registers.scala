@@ -5,7 +5,6 @@ package sml
   * <p>
   * An instance contains 32 registers and methods to access and change them
   *
-  * @author someone
   */
 case class Registers(size: Int) {
   val registers: Array[Int] = new Array(size)

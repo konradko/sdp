@@ -1,16 +1,11 @@
 package sml
 
+import java.lang.ClassNotFoundException
+
 /*
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  */
 class Translator(fileName: String) {
-  private final val LIN = "lin"
-  private final val OUT = "out"
-  private final val BNZ = "bnz"
-  private final val ADD = "add"
-  private final val SUB = "sub"
-  private final val DIV = "div"
-  private final val MUL = "mul"
 
   // word + line is the part of the current line that's not yet processed
   // word has no whitespace
@@ -28,26 +23,21 @@ class Translator(fileName: String) {
       val fields = line.split(" ")
       if (fields.length > 0) {
         labels.add(fields(0))
-        fields(1) match {
-          case LIN =>
-            program = program :+ LinInstruction(fields(0), fields(2).toInt, fields(3).toInt)
-          case OUT =>
-            program = program :+ OutInstruction(fields(0), fields(2).toInt)
-          case BNZ =>
-            program = program :+ BnzInstruction(fields(0), fields(2).toInt, fields(3))
-          case ADD =>
-            program = program :+ AddInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
-          case SUB =>
-            program = program :+ SubInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
-          case DIV =>
-            program = program :+ DivInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
-          case MUL =>
-            program = program :+ MulInstruction(fields(0), fields(2).toInt, fields(3).toInt, fields(4).toInt)
-          case x =>
-            println(s"Unknown instruction $x")
+        val opcode = fields(1)
+
+        // each instruction class needs to be defined as "sml.<Opcode>Instruction",
+        // this is to allow the SML language to be extended without having to modify this code
+        try {
+          val instructionClassName = "sml." + opcode.capitalize + "Instruction"
+          val instructionObject = Class.forName(instructionClassName).getConstructor(classOf[Array[String]]).newInstance(fields)
+          program = program :+ instructionObject.asInstanceOf[Instruction]
+        } catch {
+         case ex: ClassNotFoundException => {
+            println(s"Unknown instruction " + opcode)
+         }
         }
-      }
     }
+  }
     new Machine(labels, program)
   }
 }

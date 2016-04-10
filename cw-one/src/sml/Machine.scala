@@ -19,6 +19,7 @@ case class Machine(labels: Labels, prog: Vector[Instruction]) {
 }
 
 object Machine extends App {
+
   if (args.length == 0) {
     println("Machine: args should be sml code file to execute")
   } else {

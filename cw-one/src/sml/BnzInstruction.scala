@@ -1,11 +1,12 @@
 package sml
 
-/**
-  * This class ....
-  *
-  * @author someone
-  */
-case class BnzInstruction(label: String, opcode: String, register: Int, gotoLabel: String) extends Instruction(label, opcode) {
+/*
+ * Instruction for flow control
+ */
+case class BnzInstruction(fields: Array[String]) extends Instruction(fields(0), "bnz") {
+  val label = fields(0)
+  val register = fields(2).toInt
+  val gotoLabel = fields(3)
 
   override def execute(m: Machine) =
     if (m.regs(register) != 0) {
@@ -15,9 +16,4 @@ case class BnzInstruction(label: String, opcode: String, register: Int, gotoLabe
   override def toString(): String = {
     super.toString + " if register " + register + " value is not 0 go to label " + gotoLabel + "\n"
   }
-}
-
-object BnzInstruction {
-  def apply(label: String, register: Int, gotoLabel: String) =
-    new BnzInstruction(label, "bnz", register, gotoLabel)
 }

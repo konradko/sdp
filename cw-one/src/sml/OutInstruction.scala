@@ -1,11 +1,11 @@
 package sml
 
-/**
-  * This class ....
-  *
-  * @author someone
-  */
-case class OutInstruction(label: String, opcode: String, register: Int) extends Instruction(label, opcode) {
+/*
+ * Instruction for printing out register value
+ */
+case class OutInstruction(fields: Array[String]) extends Instruction(fields(0), "out") {
+
+  val register = fields(2).toInt
 
   override def execute(m: Machine) =
     println(m.regs(register))
@@ -13,9 +13,4 @@ case class OutInstruction(label: String, opcode: String, register: Int) extends 
   override def toString(): String = {
     super.toString + " print register " + register + " value\n"
   }
-}
-
-object OutInstruction {
-  def apply(label: String, register: Int) =
-    new OutInstruction(label, "out", register)
 }
