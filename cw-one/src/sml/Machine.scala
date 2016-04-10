@@ -14,8 +14,8 @@ case class Machine(labels: Labels, prog: Vector[Instruction]) {
 
   // Execute the program in prog, beginning at instruction 0.
   // Precondition: the program and its labels have been store properly.
-  def execute(start: Int) =
-    start.until(prog.length).foreach(x => prog(x) execute this)
+  def execute(start: Int, finish: Int = prog.length) =
+    start.until(finish).foreach(x => prog(x) execute this)
 }
 
 object Machine extends App {
