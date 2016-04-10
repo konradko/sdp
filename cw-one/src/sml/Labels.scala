@@ -12,4 +12,6 @@ case class Labels() {
   def add(l: String) = labels = labels :+ l
 
   def apply(k: Int) = labels(k)
+
+  def get(l: String) = labels.indexOf(l)
 }
